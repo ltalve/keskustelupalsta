@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./data.db"
+}
+
+model keskustelu {
+  id Int @id @default(autoincrement())
+  otsikko String
+  sisalto String
+  kirjoittaja String
+  aika DateTime @default(now())
+  viestit viesti[]
+}
+
+model viesti {
+  id Int @id @default(autoincrement())
+  sisalto String
+  kirjoittaja String
+  aika DateTime @default(now())
+  keskustelu keskustelu @relation(fields: [keskusteluId], references: [id])
+  keskusteluId Int
+}
+
